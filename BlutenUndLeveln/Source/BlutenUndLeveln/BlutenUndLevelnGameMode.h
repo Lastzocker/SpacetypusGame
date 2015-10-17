@@ -12,7 +12,6 @@ class ABlutenUndLevelnGameMode : public AGameMode
 
 public:
 	ABlutenUndLevelnGameMode();
+
+	virtual void BeginPlay() override;
 };
-
-
-

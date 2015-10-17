@@ -16,26 +16,32 @@ void EmptyLinkFunctionForGeneratedCodeBlutenUndLeveln() {}
 	void ABlutenUndLevelnPawn::StaticRegisterNativesABlutenUndLevelnPawn()
 	{
 	}
-	IMPLEMENT_CLASS(ABlutenUndLevelnPawn, 3808690534);
+	IMPLEMENT_CLASS(ABlutenUndLevelnPawn, 3101438770);
 	void ABlutenUndLevelnProjectile::StaticRegisterNativesABlutenUndLevelnProjectile()
 	{
 		FNativeFunctionRegistrar::RegisterFunction(ABlutenUndLevelnProjectile::StaticClass(),"OnHit",(Native)&ABlutenUndLevelnProjectile::execOnHit);
 	}
 	IMPLEMENT_CLASS(ABlutenUndLevelnProjectile, 3945849764);
+	void UCVectorUtility::StaticRegisterNativesUCVectorUtility()
+	{
+	}
+	IMPLEMENT_CLASS(UCVectorUtility, 2733679554);
 #if USE_COMPILED_IN_NATIVES
 // Cross Module References
 	ENGINE_API class UClass* Z_Construct_UClass_AGameMode();
 	ENGINE_API class UClass* Z_Construct_UClass_APawn();
+	ENGINE_API class UClass* Z_Construct_UClass_AActor_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USoundBase_NoRegister();
 	COREUOBJECT_API class UScriptStruct* Z_Construct_UScriptStruct_FVector();
+	ENGINE_API class UClass* Z_Construct_UClass_USceneComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 	ENGINE_API class UScriptStruct* Z_Construct_UScriptStruct_FHitResult();
 	ENGINE_API class UClass* Z_Construct_UClass_UPrimitiveComponent_NoRegister();
-	ENGINE_API class UClass* Z_Construct_UClass_AActor_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_AActor();
 	ENGINE_API class UClass* Z_Construct_UClass_UProjectileMovementComponent_NoRegister();
+	ENGINE_API class UClass* Z_Construct_UClass_UBlueprintFunctionLibrary();
 
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_ABlutenUndLevelnGameMode_NoRegister();
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_ABlutenUndLevelnGameMode();
@@ -44,6 +50,8 @@ void EmptyLinkFunctionForGeneratedCodeBlutenUndLeveln() {}
 	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_ABlutenUndLevelnProjectile_OnHit();
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_ABlutenUndLevelnProjectile_NoRegister();
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_ABlutenUndLevelnProjectile();
+	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_UCVectorUtility_NoRegister();
+	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_UCVectorUtility();
 	BLUTENUNDLEVELN_API class UPackage* Z_Construct_UPackage_BlutenUndLeveln();
 	UClass* Z_Construct_UClass_ABlutenUndLevelnGameMode_NoRegister()
 	{
@@ -98,10 +106,20 @@ void EmptyLinkFunctionForGeneratedCodeBlutenUndLeveln() {}
 
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				UProperty* NewProp_CameraRotationSmoothing = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CameraRotationSmoothing"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(CameraRotationSmoothing, ABlutenUndLevelnPawn), 0x0000000000000005);
+				UProperty* NewProp_CameraLocationSmoothing = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CameraLocationSmoothing"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(CameraLocationSmoothing, ABlutenUndLevelnPawn), 0x0000000000000005);
+				UProperty* NewProp_ProjectileLifetime = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("ProjectileLifetime"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(ProjectileLifetime, ABlutenUndLevelnPawn), 0x0000000000000005);
+				UProperty* NewProp_ProjectileSpeed = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("ProjectileSpeed"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(ProjectileSpeed, ABlutenUndLevelnPawn), 0x0000000000000005);
+				UProperty* NewProp_TargetActor = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("TargetActor"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(TargetActor, ABlutenUndLevelnPawn), 0x0000000000000005, Z_Construct_UClass_AActor_NoRegister());
+				UProperty* NewProp_TurnSpeed = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("TurnSpeed"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(TurnSpeed, ABlutenUndLevelnPawn), 0x0000000000000005);
+				UProperty* NewProp_BackwardsMultiplier = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("BackwardsMultiplier"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(BackwardsMultiplier, ABlutenUndLevelnPawn), 0x0000000000000005);
+				UProperty* NewProp_SidewaysMultiplier = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("SidewaysMultiplier"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(SidewaysMultiplier, ABlutenUndLevelnPawn), 0x0000000000000005);
+				UProperty* NewProp_ThrusterForce = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("ThrusterForce"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(ThrusterForce, ABlutenUndLevelnPawn), 0x0000000000000005);
 				UProperty* NewProp_FireSound = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("FireSound"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(FireSound, ABlutenUndLevelnPawn), 0x0000000000000005, Z_Construct_UClass_USoundBase_NoRegister());
 				UProperty* NewProp_MoveSpeed = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("MoveSpeed"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(MoveSpeed, ABlutenUndLevelnPawn), 0x0000000000000005);
 				UProperty* NewProp_FireRate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("FireRate"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(FireRate, ABlutenUndLevelnPawn), 0x0000000000000005);
 				UProperty* NewProp_GunOffset = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("GunOffset"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(GunOffset, ABlutenUndLevelnPawn), 0x0000000000000005, Z_Construct_UScriptStruct_FVector());
+				UProperty* NewProp_CameraAnchor = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CameraAnchor"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(CameraAnchor, ABlutenUndLevelnPawn), 0x00000000000a001d, Z_Construct_UClass_USceneComponent_NoRegister());
 				UProperty* NewProp_CameraBoom = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CameraBoom"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(CameraBoom, ABlutenUndLevelnPawn), 0x00000000000a001d, Z_Construct_UClass_USpringArmComponent_NoRegister());
 				UProperty* NewProp_CameraComponent = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("CameraComponent"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(CameraComponent, ABlutenUndLevelnPawn), 0x00000000000a001d, Z_Construct_UClass_UCameraComponent_NoRegister());
 				UProperty* NewProp_ShipMeshComponent = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("ShipMeshComponent"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(ShipMeshComponent, ABlutenUndLevelnPawn), 0x00000000000b001d, Z_Construct_UClass_UStaticMeshComponent_NoRegister());
@@ -114,6 +132,28 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("BlutenUndLevelnPawn.h"));
 				MetaData->SetValue(OuterClass, TEXT("IsBlueprintBase"), TEXT("true"));
 				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_CameraRotationSmoothing, TEXT("Category"), TEXT("Viewport"));
+				MetaData->SetValue(NewProp_CameraRotationSmoothing, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_CameraLocationSmoothing, TEXT("Category"), TEXT("Viewport"));
+				MetaData->SetValue(NewProp_CameraLocationSmoothing, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_CameraLocationSmoothing, TEXT("ToolTip"), TEXT("Camera smoothing"));
+				MetaData->SetValue(NewProp_ProjectileLifetime, TEXT("Category"), TEXT("Gameplay"));
+				MetaData->SetValue(NewProp_ProjectileLifetime, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_ProjectileSpeed, TEXT("Category"), TEXT("Gameplay"));
+				MetaData->SetValue(NewProp_ProjectileSpeed, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_ProjectileSpeed, TEXT("ToolTip"), TEXT("Projectile"));
+				MetaData->SetValue(NewProp_TargetActor, TEXT("Category"), TEXT("Targeting"));
+				MetaData->SetValue(NewProp_TargetActor, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_TargetActor, TEXT("ToolTip"), TEXT("Target"));
+				MetaData->SetValue(NewProp_TurnSpeed, TEXT("Category"), TEXT("Gameplay"));
+				MetaData->SetValue(NewProp_TurnSpeed, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_BackwardsMultiplier, TEXT("Category"), TEXT("Gameplay"));
+				MetaData->SetValue(NewProp_BackwardsMultiplier, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_SidewaysMultiplier, TEXT("Category"), TEXT("Gameplay"));
+				MetaData->SetValue(NewProp_SidewaysMultiplier, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_ThrusterForce, TEXT("Category"), TEXT("Gameplay"));
+				MetaData->SetValue(NewProp_ThrusterForce, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
+				MetaData->SetValue(NewProp_ThrusterForce, TEXT("ToolTip"), TEXT("Thruster Force"));
 				MetaData->SetValue(NewProp_FireSound, TEXT("Category"), TEXT("Audio"));
 				MetaData->SetValue(NewProp_FireSound, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
 				MetaData->SetValue(NewProp_FireSound, TEXT("ToolTip"), TEXT("Sound to play each time we fire"));
@@ -126,6 +166,10 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_GunOffset, TEXT("Category"), TEXT("Gameplay"));
 				MetaData->SetValue(NewProp_GunOffset, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
 				MetaData->SetValue(NewProp_GunOffset, TEXT("ToolTip"), TEXT("Offset from the ships location to spawn projectiles"));
+				MetaData->SetValue(NewProp_CameraAnchor, TEXT("AllowPrivateAccess"), TEXT("true"));
+				MetaData->SetValue(NewProp_CameraAnchor, TEXT("Category"), TEXT("Scene"));
+				MetaData->SetValue(NewProp_CameraAnchor, TEXT("EditInline"), TEXT("true"));
+				MetaData->SetValue(NewProp_CameraAnchor, TEXT("ModuleRelativePath"), TEXT("BlutenUndLevelnPawn.h"));
 				MetaData->SetValue(NewProp_CameraBoom, TEXT("AllowPrivateAccess"), TEXT("true"));
 				MetaData->SetValue(NewProp_CameraBoom, TEXT("Category"), TEXT("Camera"));
 				MetaData->SetValue(NewProp_CameraBoom, TEXT("EditInline"), TEXT("true"));
@@ -226,6 +270,37 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_ABlutenUndLevelnProjectile(Z_Construct_UClass_ABlutenUndLevelnProjectile, TEXT("ABlutenUndLevelnProjectile"));
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ABlutenUndLevelnProjectile);
+	UClass* Z_Construct_UClass_UCVectorUtility_NoRegister()
+	{
+		return UCVectorUtility::StaticClass();
+	}
+	UClass* Z_Construct_UClass_UCVectorUtility()
+	{
+		static UClass* OuterClass = NULL;
+		if (!OuterClass)
+		{
+			Z_Construct_UClass_UBlueprintFunctionLibrary();
+			Z_Construct_UPackage_BlutenUndLeveln();
+			OuterClass = UCVectorUtility::StaticClass();
+			if (!(OuterClass->ClassFlags & CLASS_Constructed))
+			{
+				UObjectForceRegistration(OuterClass);
+				OuterClass->ClassFlags |= 0x20100080;
+
+
+				OuterClass->StaticLink();
+#if WITH_METADATA
+				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
+				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("CVectorUtility.h"));
+				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+			}
+		}
+		check(OuterClass->GetClass());
+		return OuterClass;
+	}
+	static FCompiledInDefer Z_CompiledInDefer_UClass_UCVectorUtility(Z_Construct_UClass_UCVectorUtility, TEXT("UCVectorUtility"));
+	DEFINE_VTABLE_PTR_HELPER_CTOR(UCVectorUtility);
 	UPackage* Z_Construct_UPackage_BlutenUndLeveln()
 	{
 		static UPackage* ReturnPackage = NULL;
@@ -234,8 +309,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/BlutenUndLeveln")), false, false));
 			ReturnPackage->PackageFlags |= PKG_CompiledIn | 0x00000000;
 			FGuid Guid;
-			Guid.A = 0x65071549;
-			Guid.B = 0x91752D21;
+			Guid.A = 0x59EB2822;
+			Guid.B = 0x73944714;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);

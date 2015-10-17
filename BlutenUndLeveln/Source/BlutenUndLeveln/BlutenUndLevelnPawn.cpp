@@ -4,44 +4,55 @@
 #include "BlutenUndLevelnPawn.h"
 #include "BlutenUndLevelnProjectile.h"
 #include "TimerManager.h"
+#include "EngineUtils.h"
 
 const FName ABlutenUndLevelnPawn::MoveForwardBinding("MoveForward");
 const FName ABlutenUndLevelnPawn::MoveRightBinding("MoveRight");
 const FName ABlutenUndLevelnPawn::FireForwardBinding("FireForward");
 const FName ABlutenUndLevelnPawn::FireRightBinding("FireRight");
+const FName ABlutenUndLevelnPawn::TurnBinding("Turn");
 
 ABlutenUndLevelnPawn::ABlutenUndLevelnPawn()
-{	
+{
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> ShipMesh(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
 	// Create the mesh component
 	ShipMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
 	RootComponent = ShipMeshComponent;
-	ShipMeshComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
+	//ShipMeshComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
 	ShipMeshComponent->SetStaticMesh(ShipMesh.Object);
-	
+
 	// Cache our sound effect
 	static ConstructorHelpers::FObjectFinder<USoundBase> FireAudio(TEXT("/Game/TwinStick/Audio/TwinStickFire.TwinStickFire"));
 	FireSound = FireAudio.Object;
 
-	// Create a camera boom...
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->AttachTo(RootComponent);
-	CameraBoom->bAbsoluteRotation = true; // Don't want arm to rotate when ship does
-	CameraBoom->TargetArmLength = 1200.f;
-	CameraBoom->RelativeRotation = FRotator(-80.f, 0.f, 0.f);
-	CameraBoom->bDoCollisionTest = false; // Don't want to pull camera in when it collides with level
+	//Camera anchor point, acts as the cameras target transform 
+	CameraAnchor = CreateDefaultSubobject<USceneComponent>(TEXT("CameraAnchor"));
+	CameraAnchor->AttachTo(RootComponent);
+	CameraAnchor->RelativeRotation = FRotator(0, -70.f, 0);
+	CameraAnchor->RelativeLocation = FVector(0, 0, 900.f);
 
-	// Create a camera...
+
+	//Camera
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
-	CameraComponent->AttachTo(CameraBoom, USpringArmComponent::SocketName);
-	CameraComponent->bUsePawnControlRotation = false;	// Camera does not rotate relative to arm
+
+	CameraTransform = CameraAnchor->GetRelativeTransform();
+
+	CameraLocationSmoothing = 0.05f;
+	CameraRotationSmoothing = 0.05f;
 
 	// Movement
 	MoveSpeed = 1000.0f;
+
 	// Weapon
 	GunOffset = FVector(90.f, 0.f, 0.f);
 	FireRate = 0.1f;
 	bCanFire = true;
+
+	ShipMeshComponent->SetSimulatePhysics(true);
+
+	TurnSpeed = 20000.f;
+
+	ProjectileSpeed = 1500.f;
 }
 
 void ABlutenUndLevelnPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -53,74 +64,73 @@ void ABlutenUndLevelnPawn::SetupPlayerInputComponent(class UInputComponent* Inpu
 	InputComponent->BindAxis(MoveRightBinding);
 	InputComponent->BindAxis(FireForwardBinding);
 	InputComponent->BindAxis(FireRightBinding);
+	InputComponent->BindAxis(TurnBinding);
+
+	InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FireShot);
+	InputComponent->BindAction("FindTarget", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FindTarget);
 }
 
 void ABlutenUndLevelnPawn::Tick(float DeltaSeconds)
 {
+	Super::Tick(DeltaSeconds);
+
 	// Find movement direction
 	const float ForwardValue = GetInputAxisValue(MoveForwardBinding);
 	const float RightValue = GetInputAxisValue(MoveRightBinding);
+	const float TurnValue = GetInputAxisValue(TurnBinding);
 
-	// Clamp max size so that (X=1, Y=1) doesn't cause faster movement in diagonal directions
-	const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.0f);
 
-	// Calculate  movement
-	const FVector Movement = MoveDirection * MoveSpeed * DeltaSeconds;
+	//Turning
+	ShipMeshComponent->AddAngularImpulse(FVector(0, 0, TurnValue * TurnSpeed));
 
-	// If non-zero size, move this actor
-	if (Movement.SizeSquared() > 0.0f)
+	//Movement
+	if (ForwardValue > 0)
 	{
-		const FRotator NewRotation = Movement.Rotation();
-		FHitResult Hit(1.f);
-		RootComponent->MoveComponent(Movement, NewRotation, true, &Hit);
-		
-		if (Hit.IsValidBlockingHit())
-		{
-			const FVector Normal2D = Hit.Normal.GetSafeNormal2D();
-			const FVector Deflection = FVector::VectorPlaneProject(Movement, Normal2D) * (1.f - Hit.Time);
-			RootComponent->MoveComponent(Deflection, NewRotation, true);
-		}
+		ShipMeshComponent->AddForce(ForwardValue * ThrusterForce * GetActorForwardVector());
 	}
-	
-	// Create fire direction vector
-	const float FireForwardValue = GetInputAxisValue(FireForwardBinding);
-	const float FireRightValue = GetInputAxisValue(FireRightBinding);
-	const FVector FireDirection = FVector(FireForwardValue, FireRightValue, 0.f);
+	else
+	{
+		ShipMeshComponent->AddForce(ForwardValue * ThrusterForce * GetActorForwardVector() * BackwardsMultiplier);
+	}
+	ShipMeshComponent->AddForce(RightValue * ThrusterForce * GetActorRightVector() * SidewaysMultiplier);
 
-	// Try and fire a shot
-	FireShot(FireDirection);
+	//UpdateCameraLocation
+	CameraTransform = FTransform(
+		FMath::Lerp(CameraTransform.GetRotation().Rotator(), CameraAnchor->GetComponentRotation(), CameraRotationSmoothing),
+		FMath::Lerp(CameraTransform.GetLocation(), CameraAnchor->GetComponentLocation(), CameraLocationSmoothing),
+		FVector(1));
+
+	CameraComponent->SetWorldTransform(CameraTransform);
 }
 
-void ABlutenUndLevelnPawn::FireShot(FVector FireDirection)
+void ABlutenUndLevelnPawn::FireShot()
 {
 	// If we it's ok to fire again
 	if (bCanFire == true)
 	{
-		// If we are pressing fire stick in a direction
-		if (FireDirection.SizeSquared() > 0.0f)
+		FVector FireDirection = GetActorForwardVector();
+		// Spawn projectile at an offset from this pawn
+		const FVector SpawnLocation = GetActorLocation(); //+ FireRotation.RotateVector(GunOffset);
+
+		UWorld* const World = GetWorld();
+		if (World != NULL)
 		{
-			const FRotator FireRotation = FireDirection.Rotation();
-			// Spawn projectile at an offset from this pawn
-			const FVector SpawnLocation = GetActorLocation() + FireRotation.RotateVector(GunOffset);
-
-			UWorld* const World = GetWorld();
-			if (World != NULL)
-			{
-				// spawn the projectile
-				World->SpawnActor<ABlutenUndLevelnProjectile>(SpawnLocation, FireRotation);
-			}
-
-			bCanFire = false;
-			World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &ABlutenUndLevelnPawn::ShotTimerExpired, FireRate);
-
-			// try and play the sound if specified
-			if (FireSound != nullptr)
-			{
-				UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
-			}
-
-			bCanFire = false;
+			// spawn the projectile
+			ABlutenUndLevelnProjectile *NewProjectile = World->SpawnActor<ABlutenUndLevelnProjectile>(SpawnLocation, GetActorRotation());
+			NewProjectile->Launch((ProjectileSpeed * FireDirection) + GetVelocity(), ProjectileLifetime);
+			NewProjectile->GetProjectileMesh()->IgnoreActorWhenMoving(NewProjectile, true);
 		}
+
+		bCanFire = false;
+		World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &ABlutenUndLevelnPawn::ShotTimerExpired, FireRate);
+
+		// try and play the sound if specified
+		if (FireSound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+		}
+
+		bCanFire = false;
 	}
 }
 
@@ -129,3 +139,16 @@ void ABlutenUndLevelnPawn::ShotTimerExpired()
 	bCanFire = true;
 }
 
+void ABlutenUndLevelnPawn::FindTarget()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Searching for target"));
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		if (ActorItr->ActorHasTag("Target"))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Target found: %s"), *ActorItr->GetName());
+			TargetActor = *ActorItr;
+			return;
+		}
+	}
+}

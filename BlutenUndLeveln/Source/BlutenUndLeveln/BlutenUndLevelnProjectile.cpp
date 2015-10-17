@@ -20,7 +20,8 @@ ABlutenUndLevelnProjectile::ABlutenUndLevelnProjectile()
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement0"));
 	ProjectileMovement->UpdatedComponent = ProjectileMesh;
-	ProjectileMovement->InitialSpeed = 3000.f;
+	ProjectileMovement->bInitialVelocityInLocalSpace = true;
+	ProjectileMovement->InitialSpeed = 0.f;
 	ProjectileMovement->MaxSpeed = 3000.f;
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = false;
@@ -33,10 +34,19 @@ ABlutenUndLevelnProjectile::ABlutenUndLevelnProjectile()
 void ABlutenUndLevelnProjectile::OnHit(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// Only add impulse and destroy projectile if we hit a physics
-	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
+	if ((OtherActor != NULL) && (OtherActor != this))
 	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 20.0f, GetActorLocation());
+		if ((OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
+		{
+			OtherComp->AddImpulseAtLocation(GetVelocity() * 1.0f, GetActorLocation());
+		}
+		Destroy();
 	}
+}
 
-	Destroy();
+void ABlutenUndLevelnProjectile::Launch(FVector Velocity, float Lifetime)
+{
+	//ProjectileMovement->InitialSpeed = Speed;
+	ProjectileMovement->Velocity = Velocity;
+	InitialLifeSpan = Lifetime;
 }

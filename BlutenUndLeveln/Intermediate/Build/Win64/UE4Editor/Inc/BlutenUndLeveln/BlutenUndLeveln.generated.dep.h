@@ -14,3 +14,6 @@
 #ifndef BLUTENUNDLEVELN_BlutenUndLevelnProjectile_generated_h
 	#include "BlutenUndLevelnProjectile.h"
 #endif
+#ifndef BLUTENUNDLEVELN_CVectorUtility_generated_h
+	#include "CVectorUtility.h"
+#endif

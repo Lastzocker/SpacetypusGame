@@ -10,3 +10,13 @@ ABlutenUndLevelnGameMode::ABlutenUndLevelnGameMode()
 	DefaultPawnClass = ABlutenUndLevelnPawn::StaticClass();
 }
 
+void ABlutenUndLevelnGameMode::BeginPlay()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Game started"));
+
+	APlayerController *MyPlayerController = GetWorld()->GetFirstPlayerController();
+
+	MyPlayerController->bShowMouseCursor = true;
+
+	Super::BeginPlay();
+}
