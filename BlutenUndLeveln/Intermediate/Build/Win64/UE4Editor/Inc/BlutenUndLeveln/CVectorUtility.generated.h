@@ -8,13 +8,186 @@
 #include "ObjectBase.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+struct FVector;
+struct FVector2D;
+class APlayerController;
 #ifdef BLUTENUNDLEVELN_CVectorUtility_generated_h
 #error "CVectorUtility.generated.h already included, missing '#pragma once' in CVectorUtility.h"
 #endif
 #define BLUTENUNDLEVELN_CVectorUtility_generated_h
 
-#define BlutenUndLeveln_Source_BlutenUndLeveln_CVectorUtility_h_15_RPC_WRAPPERS
-#define BlutenUndLeveln_Source_BlutenUndLeveln_CVectorUtility_h_15_RPC_WRAPPERS_NO_PURE_DECLS
+#define BlutenUndLeveln_Source_BlutenUndLeveln_CVectorUtility_h_15_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execConvertToMapSpace) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_worldLocation); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_playerLocation); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_mapOriginPosition); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_mapRadius); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_ratio); \
+		P_GET_OBJECT(APlayerController,Z_Param_player); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_mapPosition); \
+		P_GET_UBOOL_REF(Z_Param_Out_inRange); \
+		P_FINISH; \
+		UCVectorUtility::ConvertToMapSpace(Z_Param_Out_worldLocation,Z_Param_Out_playerLocation,Z_Param_Out_mapOriginPosition,Z_Param_Out_mapRadius,Z_Param_Out_ratio,Z_Param_player,Z_Param_Out_mapPosition,Z_Param_Out_inRange); \
+	} \
+ \
+	DECLARE_FUNCTION(execProjectToScreenBorder) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_originLocation); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetLocation); \
+		P_GET_OBJECT(APlayerController,Z_Param_player); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_projectedPosition); \
+		P_FINISH; \
+		UCVectorUtility::ProjectToScreenBorder(Z_Param_Out_originLocation,Z_Param_Out_targetLocation,Z_Param_player,Z_Param_Out_projectedPosition); \
+	} \
+ \
+	DECLARE_FUNCTION(execLineLineIntersection) \
+	{ \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_a1); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_a2); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_b1); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_b2); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_intersectionPoint); \
+		P_FINISH; \
+		UCVectorUtility::LineLineIntersection(Z_Param_Out_a1,Z_Param_Out_a2,Z_Param_Out_b1,Z_Param_Out_b2,Z_Param_Out_intersectionPoint); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetTargetRadialOffsetVector) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_aimVector); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_muzzlePosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_radialOffsetVector); \
+		P_FINISH; \
+		UCVectorUtility::GetTargetRadialOffsetVector(Z_Param_Out_aimVector,Z_Param_Out_muzzlePosition,Z_Param_Out_targetPosition,Z_Param_Out_radialOffsetVector); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetTravelTimeToPoint) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_startPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_endPosition); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_speed); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_travelTime); \
+		P_FINISH; \
+		UCVectorUtility::GetTravelTimeToPoint(Z_Param_Out_startPosition,Z_Param_Out_endPosition,Z_Param_Out_speed,Z_Param_Out_travelTime); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetAimDirectionIterative) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_muzzlePosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetRelativeVelocity); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetAcceleration); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_bulletSpeed); \
+		P_GET_PROPERTY_REF(UIntProperty,Z_Param_Out_iterations); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_timeToTarget); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedAimVector); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedTargetRelativePosition); \
+		P_FINISH; \
+		UCVectorUtility::GetAimDirectionIterative(Z_Param_Out_muzzlePosition,Z_Param_Out_targetPosition,Z_Param_Out_targetRelativeVelocity,Z_Param_Out_targetAcceleration,Z_Param_Out_bulletSpeed,Z_Param_Out_iterations,Z_Param_Out_timeToTarget,Z_Param_Out_predictedAimVector,Z_Param_Out_predictedTargetRelativePosition); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetAimDirectionPrecise) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_muzzlePosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetRelativeVelocity); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_bulletSpeed); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedAimVector); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedTargetRelativePosition); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_timeToTarget); \
+		P_FINISH; \
+		UCVectorUtility::GetAimDirectionPrecise(Z_Param_Out_muzzlePosition,Z_Param_Out_targetPosition,Z_Param_Out_targetRelativeVelocity,Z_Param_Out_bulletSpeed,Z_Param_Out_predictedAimVector,Z_Param_Out_predictedTargetRelativePosition,Z_Param_Out_timeToTarget); \
+	}
+
+
+#define BlutenUndLeveln_Source_BlutenUndLeveln_CVectorUtility_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execConvertToMapSpace) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_worldLocation); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_playerLocation); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_mapOriginPosition); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_mapRadius); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_ratio); \
+		P_GET_OBJECT(APlayerController,Z_Param_player); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_mapPosition); \
+		P_GET_UBOOL_REF(Z_Param_Out_inRange); \
+		P_FINISH; \
+		UCVectorUtility::ConvertToMapSpace(Z_Param_Out_worldLocation,Z_Param_Out_playerLocation,Z_Param_Out_mapOriginPosition,Z_Param_Out_mapRadius,Z_Param_Out_ratio,Z_Param_player,Z_Param_Out_mapPosition,Z_Param_Out_inRange); \
+	} \
+ \
+	DECLARE_FUNCTION(execProjectToScreenBorder) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_originLocation); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetLocation); \
+		P_GET_OBJECT(APlayerController,Z_Param_player); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_projectedPosition); \
+		P_FINISH; \
+		UCVectorUtility::ProjectToScreenBorder(Z_Param_Out_originLocation,Z_Param_Out_targetLocation,Z_Param_player,Z_Param_Out_projectedPosition); \
+	} \
+ \
+	DECLARE_FUNCTION(execLineLineIntersection) \
+	{ \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_a1); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_a2); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_b1); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_b2); \
+		P_GET_STRUCT_REF(FVector2D,Z_Param_Out_intersectionPoint); \
+		P_FINISH; \
+		UCVectorUtility::LineLineIntersection(Z_Param_Out_a1,Z_Param_Out_a2,Z_Param_Out_b1,Z_Param_Out_b2,Z_Param_Out_intersectionPoint); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetTargetRadialOffsetVector) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_aimVector); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_muzzlePosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_radialOffsetVector); \
+		P_FINISH; \
+		UCVectorUtility::GetTargetRadialOffsetVector(Z_Param_Out_aimVector,Z_Param_Out_muzzlePosition,Z_Param_Out_targetPosition,Z_Param_Out_radialOffsetVector); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetTravelTimeToPoint) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_startPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_endPosition); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_speed); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_travelTime); \
+		P_FINISH; \
+		UCVectorUtility::GetTravelTimeToPoint(Z_Param_Out_startPosition,Z_Param_Out_endPosition,Z_Param_Out_speed,Z_Param_Out_travelTime); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetAimDirectionIterative) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_muzzlePosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetRelativeVelocity); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetAcceleration); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_bulletSpeed); \
+		P_GET_PROPERTY_REF(UIntProperty,Z_Param_Out_iterations); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_timeToTarget); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedAimVector); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedTargetRelativePosition); \
+		P_FINISH; \
+		UCVectorUtility::GetAimDirectionIterative(Z_Param_Out_muzzlePosition,Z_Param_Out_targetPosition,Z_Param_Out_targetRelativeVelocity,Z_Param_Out_targetAcceleration,Z_Param_Out_bulletSpeed,Z_Param_Out_iterations,Z_Param_Out_timeToTarget,Z_Param_Out_predictedAimVector,Z_Param_Out_predictedTargetRelativePosition); \
+	} \
+ \
+	DECLARE_FUNCTION(execGetAimDirectionPrecise) \
+	{ \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_muzzlePosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetPosition); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_targetRelativeVelocity); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_bulletSpeed); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedAimVector); \
+		P_GET_STRUCT_REF(FVector,Z_Param_Out_predictedTargetRelativePosition); \
+		P_GET_PROPERTY_REF(UFloatProperty,Z_Param_Out_timeToTarget); \
+		P_FINISH; \
+		UCVectorUtility::GetAimDirectionPrecise(Z_Param_Out_muzzlePosition,Z_Param_Out_targetPosition,Z_Param_Out_targetRelativeVelocity,Z_Param_Out_bulletSpeed,Z_Param_Out_predictedAimVector,Z_Param_Out_predictedTargetRelativePosition,Z_Param_Out_timeToTarget); \
+	}
+
+
 #define BlutenUndLeveln_Source_BlutenUndLeveln_CVectorUtility_h_15_INCLASS_NO_PURE_DECLS \
 	private: \
 	static void StaticRegisterNativesUCVectorUtility(); \

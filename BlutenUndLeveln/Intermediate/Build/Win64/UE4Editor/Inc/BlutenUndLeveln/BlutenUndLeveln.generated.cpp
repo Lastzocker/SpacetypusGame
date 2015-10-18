@@ -24,8 +24,15 @@ void EmptyLinkFunctionForGeneratedCodeBlutenUndLeveln() {}
 	IMPLEMENT_CLASS(ABlutenUndLevelnProjectile, 3945849764);
 	void UCVectorUtility::StaticRegisterNativesUCVectorUtility()
 	{
+		FNativeFunctionRegistrar::RegisterFunction(UCVectorUtility::StaticClass(),"ConvertToMapSpace",(Native)&UCVectorUtility::execConvertToMapSpace);
+		FNativeFunctionRegistrar::RegisterFunction(UCVectorUtility::StaticClass(),"GetAimDirectionIterative",(Native)&UCVectorUtility::execGetAimDirectionIterative);
+		FNativeFunctionRegistrar::RegisterFunction(UCVectorUtility::StaticClass(),"GetAimDirectionPrecise",(Native)&UCVectorUtility::execGetAimDirectionPrecise);
+		FNativeFunctionRegistrar::RegisterFunction(UCVectorUtility::StaticClass(),"GetTargetRadialOffsetVector",(Native)&UCVectorUtility::execGetTargetRadialOffsetVector);
+		FNativeFunctionRegistrar::RegisterFunction(UCVectorUtility::StaticClass(),"GetTravelTimeToPoint",(Native)&UCVectorUtility::execGetTravelTimeToPoint);
+		FNativeFunctionRegistrar::RegisterFunction(UCVectorUtility::StaticClass(),"LineLineIntersection",(Native)&UCVectorUtility::execLineLineIntersection);
+		FNativeFunctionRegistrar::RegisterFunction(UCVectorUtility::StaticClass(),"ProjectToScreenBorder",(Native)&UCVectorUtility::execProjectToScreenBorder);
 	}
-	IMPLEMENT_CLASS(UCVectorUtility, 2733679554);
+	IMPLEMENT_CLASS(UCVectorUtility, 1667739562);
 #if USE_COMPILED_IN_NATIVES
 // Cross Module References
 	ENGINE_API class UClass* Z_Construct_UClass_AGameMode();
@@ -41,6 +48,8 @@ void EmptyLinkFunctionForGeneratedCodeBlutenUndLeveln() {}
 	ENGINE_API class UClass* Z_Construct_UClass_UPrimitiveComponent_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_AActor();
 	ENGINE_API class UClass* Z_Construct_UClass_UProjectileMovementComponent_NoRegister();
+	COREUOBJECT_API class UScriptStruct* Z_Construct_UScriptStruct_FVector2D();
+	ENGINE_API class UClass* Z_Construct_UClass_APlayerController_NoRegister();
 	ENGINE_API class UClass* Z_Construct_UClass_UBlueprintFunctionLibrary();
 
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_ABlutenUndLevelnGameMode_NoRegister();
@@ -50,6 +59,13 @@ void EmptyLinkFunctionForGeneratedCodeBlutenUndLeveln() {}
 	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_ABlutenUndLevelnProjectile_OnHit();
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_ABlutenUndLevelnProjectile_NoRegister();
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_ABlutenUndLevelnProjectile();
+	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_UCVectorUtility_ConvertToMapSpace();
+	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_UCVectorUtility_GetAimDirectionIterative();
+	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_UCVectorUtility_GetAimDirectionPrecise();
+	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_UCVectorUtility_GetTargetRadialOffsetVector();
+	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_UCVectorUtility_GetTravelTimeToPoint();
+	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_UCVectorUtility_LineLineIntersection();
+	BLUTENUNDLEVELN_API class UFunction* Z_Construct_UFunction_UCVectorUtility_ProjectToScreenBorder();
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_UCVectorUtility_NoRegister();
 	BLUTENUNDLEVELN_API class UClass* Z_Construct_UClass_UCVectorUtility();
 	BLUTENUNDLEVELN_API class UPackage* Z_Construct_UPackage_BlutenUndLeveln();
@@ -270,6 +286,229 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_ABlutenUndLevelnProjectile(Z_Construct_UClass_ABlutenUndLevelnProjectile, TEXT("ABlutenUndLevelnProjectile"));
 	DEFINE_VTABLE_PTR_HELPER_CTOR(ABlutenUndLevelnProjectile);
+	UFunction* Z_Construct_UFunction_UCVectorUtility_ConvertToMapSpace()
+	{
+		struct CVectorUtility_eventConvertToMapSpace_Parms
+		{
+			FVector worldLocation;
+			FVector playerLocation;
+			FVector2D mapOriginPosition;
+			float mapRadius;
+			float ratio;
+			const APlayerController* player;
+			FVector2D mapPosition;
+			bool inRange;
+		};
+		UObject* Outer=Z_Construct_UClass_UCVectorUtility();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("ConvertToMapSpace"), RF_Public|RF_Transient|RF_Native) UFunction(FObjectInitializer(), NULL, 0x04C22401, 65535, sizeof(CVectorUtility_eventConvertToMapSpace_Parms));
+			CPP_BOOL_PROPERTY_BITMASK_STRUCT(inRange, CVectorUtility_eventConvertToMapSpace_Parms, bool);
+			UProperty* NewProp_inRange = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("inRange"), RF_Public|RF_Transient|RF_Native) UBoolProperty(FObjectInitializer(), EC_CppProperty, CPP_BOOL_PROPERTY_OFFSET(inRange, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000000000180, CPP_BOOL_PROPERTY_BITMASK(inRange, CVectorUtility_eventConvertToMapSpace_Parms), sizeof(bool), true);
+			UProperty* NewProp_mapPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("mapPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(mapPosition, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector2D());
+			UProperty* NewProp_player = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("player"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(player, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000000000082, Z_Construct_UClass_APlayerController_NoRegister());
+			UProperty* NewProp_ratio = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("ratio"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(ratio, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000008000182);
+			UProperty* NewProp_mapRadius = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("mapRadius"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(mapRadius, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000008000182);
+			UProperty* NewProp_mapOriginPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("mapOriginPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(mapOriginPosition, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector2D());
+			UProperty* NewProp_playerLocation = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("playerLocation"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(playerLocation, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_worldLocation = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("worldLocation"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(worldLocation, CVectorUtility_eventConvertToMapSpace_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("CVectorUtility"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_UCVectorUtility_GetAimDirectionIterative()
+	{
+		struct CVectorUtility_eventGetAimDirectionIterative_Parms
+		{
+			FVector muzzlePosition;
+			FVector targetPosition;
+			FVector targetRelativeVelocity;
+			FVector targetAcceleration;
+			float bulletSpeed;
+			int32 iterations;
+			float timeToTarget;
+			FVector predictedAimVector;
+			FVector predictedTargetRelativePosition;
+		};
+		UObject* Outer=Z_Construct_UClass_UCVectorUtility();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("GetAimDirectionIterative"), RF_Public|RF_Transient|RF_Native) UFunction(FObjectInitializer(), NULL, 0x04C22401, 65535, sizeof(CVectorUtility_eventGetAimDirectionIterative_Parms));
+			UProperty* NewProp_predictedTargetRelativePosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("predictedTargetRelativePosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(predictedTargetRelativePosition, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_predictedAimVector = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("predictedAimVector"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(predictedAimVector, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_timeToTarget = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("timeToTarget"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(timeToTarget, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000008000180);
+			UProperty* NewProp_iterations = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("iterations"), RF_Public|RF_Transient|RF_Native) UIntProperty(CPP_PROPERTY_BASE(iterations, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000008000182);
+			UProperty* NewProp_bulletSpeed = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("bulletSpeed"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(bulletSpeed, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000008000182);
+			UProperty* NewProp_targetAcceleration = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("targetAcceleration"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(targetAcceleration, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_targetRelativeVelocity = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("targetRelativeVelocity"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(targetRelativeVelocity, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_targetPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("targetPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(targetPosition, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_muzzlePosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("muzzlePosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(muzzlePosition, CVectorUtility_eventGetAimDirectionIterative_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("CVectorUtility"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_UCVectorUtility_GetAimDirectionPrecise()
+	{
+		struct CVectorUtility_eventGetAimDirectionPrecise_Parms
+		{
+			FVector muzzlePosition;
+			FVector targetPosition;
+			FVector targetRelativeVelocity;
+			float bulletSpeed;
+			FVector predictedAimVector;
+			FVector predictedTargetRelativePosition;
+			float timeToTarget;
+		};
+		UObject* Outer=Z_Construct_UClass_UCVectorUtility();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("GetAimDirectionPrecise"), RF_Public|RF_Transient|RF_Native) UFunction(FObjectInitializer(), NULL, 0x04C22401, 65535, sizeof(CVectorUtility_eventGetAimDirectionPrecise_Parms));
+			UProperty* NewProp_timeToTarget = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("timeToTarget"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(timeToTarget, CVectorUtility_eventGetAimDirectionPrecise_Parms), 0x0000000000000180);
+			UProperty* NewProp_predictedTargetRelativePosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("predictedTargetRelativePosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(predictedTargetRelativePosition, CVectorUtility_eventGetAimDirectionPrecise_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_predictedAimVector = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("predictedAimVector"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(predictedAimVector, CVectorUtility_eventGetAimDirectionPrecise_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_bulletSpeed = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("bulletSpeed"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(bulletSpeed, CVectorUtility_eventGetAimDirectionPrecise_Parms), 0x0000000008000182);
+			UProperty* NewProp_targetRelativeVelocity = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("targetRelativeVelocity"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(targetRelativeVelocity, CVectorUtility_eventGetAimDirectionPrecise_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_targetPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("targetPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(targetPosition, CVectorUtility_eventGetAimDirectionPrecise_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_muzzlePosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("muzzlePosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(muzzlePosition, CVectorUtility_eventGetAimDirectionPrecise_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("CVectorUtility"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_UCVectorUtility_GetTargetRadialOffsetVector()
+	{
+		struct CVectorUtility_eventGetTargetRadialOffsetVector_Parms
+		{
+			FVector aimVector;
+			FVector muzzlePosition;
+			FVector targetPosition;
+			FVector radialOffsetVector;
+		};
+		UObject* Outer=Z_Construct_UClass_UCVectorUtility();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("GetTargetRadialOffsetVector"), RF_Public|RF_Transient|RF_Native) UFunction(FObjectInitializer(), NULL, 0x04C22401, 65535, sizeof(CVectorUtility_eventGetTargetRadialOffsetVector_Parms));
+			UProperty* NewProp_radialOffsetVector = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("radialOffsetVector"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(radialOffsetVector, CVectorUtility_eventGetTargetRadialOffsetVector_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_targetPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("targetPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(targetPosition, CVectorUtility_eventGetTargetRadialOffsetVector_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_muzzlePosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("muzzlePosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(muzzlePosition, CVectorUtility_eventGetTargetRadialOffsetVector_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_aimVector = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("aimVector"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(aimVector, CVectorUtility_eventGetTargetRadialOffsetVector_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("CVectorUtility"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_UCVectorUtility_GetTravelTimeToPoint()
+	{
+		struct CVectorUtility_eventGetTravelTimeToPoint_Parms
+		{
+			FVector startPosition;
+			FVector endPosition;
+			float speed;
+			float travelTime;
+		};
+		UObject* Outer=Z_Construct_UClass_UCVectorUtility();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("GetTravelTimeToPoint"), RF_Public|RF_Transient|RF_Native) UFunction(FObjectInitializer(), NULL, 0x04C22401, 65535, sizeof(CVectorUtility_eventGetTravelTimeToPoint_Parms));
+			UProperty* NewProp_travelTime = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("travelTime"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(travelTime, CVectorUtility_eventGetTravelTimeToPoint_Parms), 0x0000000000000180);
+			UProperty* NewProp_speed = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("speed"), RF_Public|RF_Transient|RF_Native) UFloatProperty(CPP_PROPERTY_BASE(speed, CVectorUtility_eventGetTravelTimeToPoint_Parms), 0x0000000008000182);
+			UProperty* NewProp_endPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("endPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(endPosition, CVectorUtility_eventGetTravelTimeToPoint_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_startPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("startPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(startPosition, CVectorUtility_eventGetTravelTimeToPoint_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("CVectorUtility"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_UCVectorUtility_LineLineIntersection()
+	{
+		struct CVectorUtility_eventLineLineIntersection_Parms
+		{
+			FVector2D a1;
+			FVector2D a2;
+			FVector2D b1;
+			FVector2D b2;
+			FVector2D intersectionPoint;
+		};
+		UObject* Outer=Z_Construct_UClass_UCVectorUtility();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("LineLineIntersection"), RF_Public|RF_Transient|RF_Native) UFunction(FObjectInitializer(), NULL, 0x04C22401, 65535, sizeof(CVectorUtility_eventLineLineIntersection_Parms));
+			UProperty* NewProp_intersectionPoint = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("intersectionPoint"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(intersectionPoint, CVectorUtility_eventLineLineIntersection_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector2D());
+			UProperty* NewProp_b2 = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("b2"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(b2, CVectorUtility_eventLineLineIntersection_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector2D());
+			UProperty* NewProp_b1 = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("b1"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(b1, CVectorUtility_eventLineLineIntersection_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector2D());
+			UProperty* NewProp_a2 = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("a2"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(a2, CVectorUtility_eventLineLineIntersection_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector2D());
+			UProperty* NewProp_a1 = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("a1"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(a1, CVectorUtility_eventLineLineIntersection_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector2D());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("CVectorUtility"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
+	UFunction* Z_Construct_UFunction_UCVectorUtility_ProjectToScreenBorder()
+	{
+		struct CVectorUtility_eventProjectToScreenBorder_Parms
+		{
+			FVector originLocation;
+			FVector targetLocation;
+			const APlayerController* player;
+			FVector2D projectedPosition;
+		};
+		UObject* Outer=Z_Construct_UClass_UCVectorUtility();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("ProjectToScreenBorder"), RF_Public|RF_Transient|RF_Native) UFunction(FObjectInitializer(), NULL, 0x04C22401, 65535, sizeof(CVectorUtility_eventProjectToScreenBorder_Parms));
+			UProperty* NewProp_projectedPosition = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("projectedPosition"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(projectedPosition, CVectorUtility_eventProjectToScreenBorder_Parms), 0x0000000000000180, Z_Construct_UScriptStruct_FVector2D());
+			UProperty* NewProp_player = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("player"), RF_Public|RF_Transient|RF_Native) UObjectProperty(CPP_PROPERTY_BASE(player, CVectorUtility_eventProjectToScreenBorder_Parms), 0x0000000000000082, Z_Construct_UClass_APlayerController_NoRegister());
+			UProperty* NewProp_targetLocation = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("targetLocation"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(targetLocation, CVectorUtility_eventProjectToScreenBorder_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			UProperty* NewProp_originLocation = new(EC_InternalUseOnlyConstructor, ReturnFunction, TEXT("originLocation"), RF_Public|RF_Transient|RF_Native) UStructProperty(CPP_PROPERTY_BASE(originLocation, CVectorUtility_eventProjectToScreenBorder_Parms), 0x0000000008000182, Z_Construct_UScriptStruct_FVector());
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("Category"), TEXT("CVectorUtility"));
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("CVectorUtility.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UClass* Z_Construct_UClass_UCVectorUtility_NoRegister()
 	{
 		return UCVectorUtility::StaticClass();
@@ -287,7 +526,21 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				UObjectForceRegistration(OuterClass);
 				OuterClass->ClassFlags |= 0x20100080;
 
+				OuterClass->LinkChild(Z_Construct_UFunction_UCVectorUtility_ConvertToMapSpace());
+				OuterClass->LinkChild(Z_Construct_UFunction_UCVectorUtility_GetAimDirectionIterative());
+				OuterClass->LinkChild(Z_Construct_UFunction_UCVectorUtility_GetAimDirectionPrecise());
+				OuterClass->LinkChild(Z_Construct_UFunction_UCVectorUtility_GetTargetRadialOffsetVector());
+				OuterClass->LinkChild(Z_Construct_UFunction_UCVectorUtility_GetTravelTimeToPoint());
+				OuterClass->LinkChild(Z_Construct_UFunction_UCVectorUtility_LineLineIntersection());
+				OuterClass->LinkChild(Z_Construct_UFunction_UCVectorUtility_ProjectToScreenBorder());
 
+				OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_UCVectorUtility_ConvertToMapSpace()); // 2171761768
+				OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_UCVectorUtility_GetAimDirectionIterative()); // 932667704
+				OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_UCVectorUtility_GetAimDirectionPrecise()); // 2587017332
+				OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_UCVectorUtility_GetTargetRadialOffsetVector()); // 1451815612
+				OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_UCVectorUtility_GetTravelTimeToPoint()); // 3185983509
+				OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_UCVectorUtility_LineLineIntersection()); // 1712608624
+				OuterClass->AddFunctionToFunctionMap(Z_Construct_UFunction_UCVectorUtility_ProjectToScreenBorder()); // 1126080408
 				OuterClass->StaticLink();
 #if WITH_METADATA
 				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
@@ -309,8 +562,8 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/BlutenUndLeveln")), false, false));
 			ReturnPackage->PackageFlags |= PKG_CompiledIn | 0x00000000;
 			FGuid Guid;
-			Guid.A = 0x59EB2822;
-			Guid.B = 0x73944714;
+			Guid.A = 0x8E3A9AAE;
+			Guid.B = 0x54325EC9;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);
