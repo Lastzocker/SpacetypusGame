@@ -87,6 +87,10 @@ public:
 
 	void FindTarget();
 
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+	void Turn(float Value);
+
 	// Static names for axis bindings
 	static const FName MoveForwardBinding;
 	static const FName MoveRightBinding;
