@@ -152,3 +152,25 @@ void ABlutenUndLevelnPawn::FindTarget()
 		}
 	}
 }
+
+void ABlutenUndLevelnPawn::MoveForward(float Value)
+{
+	if (Value > 0)
+	{
+		ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector());
+	}
+	else
+	{
+		ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector() * BackwardsMultiplier);
+	}
+}
+
+void ABlutenUndLevelnPawn::MoveRight(float Value)
+{
+	ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorRightVector() * SidewaysMultiplier);
+}
+
+void ABlutenUndLevelnPawn::Turn(float Value)
+{
+	ShipMeshComponent->AddAngularImpulse(FVector(0, 0, Value * TurnSpeed));
+}
