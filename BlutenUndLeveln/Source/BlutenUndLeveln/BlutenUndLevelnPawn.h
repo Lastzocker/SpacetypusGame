@@ -79,17 +79,25 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End Actor Interface
 
-	/* Fire a shot in the specified direction */
-	void FireShot();
 
 	/* Handler for the fire timer expiry */
 	void ShotTimerExpired();
 
+	//Input events
+	UFUNCTION(BlueprintCallable, Category = "ShipActions")
+	void MoveForward(float Value);
+
+	UFUNCTION(BlueprintCallable, Category = "ShipActions")
+	void MoveRight(float Value);
+
+	UFUNCTION(BlueprintCallable, Category = "ShipActions")
+	void Turn(float Value);
+
+	UFUNCTION(BlueprintCallable, Category = "ShipActions")
 	void FindTarget();
 
-	void MoveForward(float Value);
-	void MoveRight(float Value);
-	void Turn(float Value);
+	UFUNCTION(BlueprintCallable, Category = "ShipActions")
+	void FireShot();
 
 	// Static names for axis bindings
 	static const FName MoveForwardBinding;

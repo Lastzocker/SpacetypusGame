@@ -66,14 +66,15 @@ void ABlutenUndLevelnPawn::SetupPlayerInputComponent(class UInputComponent* Inpu
 	InputComponent->BindAxis(FireRightBinding);
 	InputComponent->BindAxis(TurnBinding);
 
-	InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FireShot);
-	InputComponent->BindAction("FindTarget", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FindTarget);
+	//InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FireShot);
+	//InputComponent->BindAction("FindTarget", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FindTarget);
 }
 
 void ABlutenUndLevelnPawn::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	/*
 	// Find movement direction
 	const float ForwardValue = GetInputAxisValue(MoveForwardBinding);
 	const float RightValue = GetInputAxisValue(MoveRightBinding);
@@ -93,7 +94,7 @@ void ABlutenUndLevelnPawn::Tick(float DeltaSeconds)
 		ShipMeshComponent->AddForce(ForwardValue * ThrusterForce * GetActorForwardVector() * BackwardsMultiplier);
 	}
 	ShipMeshComponent->AddForce(RightValue * ThrusterForce * GetActorRightVector() * SidewaysMultiplier);
-
+	*/
 	//UpdateCameraLocation
 	CameraTransform = FTransform(
 		FMath::Lerp(CameraTransform.GetRotation().Rotator(), CameraAnchor->GetComponentRotation(), CameraRotationSmoothing),
