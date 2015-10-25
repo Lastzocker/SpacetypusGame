@@ -53,6 +53,11 @@ ABlutenUndLevelnPawn::ABlutenUndLevelnPawn()
 	TurnSpeed = 20000.f;
 
 	ProjectileSpeed = 1500.f;
+
+	MaxHullIntegrity = 1000.f;
+
+	HullIntegrity = MaxHullIntegrity;
+
 }
 
 void ABlutenUndLevelnPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)

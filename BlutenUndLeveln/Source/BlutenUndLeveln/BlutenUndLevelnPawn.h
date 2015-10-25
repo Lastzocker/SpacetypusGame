@@ -39,6 +39,14 @@ public:
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
 		float MoveSpeed;
 
+	/* The ship's "health" */
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		float HullIntegrity;
+
+	/* The ship's maximum "health" */
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+		float MaxHullIntegrity;
+
 	/** Sound to play each time we fire */
 	UPROPERTY(Category = Audio, EditAnywhere, BlueprintReadWrite)
 	class USoundBase* FireSound;
