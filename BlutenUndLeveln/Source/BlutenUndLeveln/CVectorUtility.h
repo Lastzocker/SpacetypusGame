@@ -36,4 +36,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "CVectorUtility")
 		static void ConvertToMapSpace(const FVector &worldLocation, const FVector &playerLocation, const FVector2D &mapOriginPosition, const float &mapRadius, const float &ratio, const APlayerController *player, FVector2D &mapPosition, bool &inRange);
+
+	UFUNCTION(BlueprintCallable, Category = "CVectorUtility")
+		static void GetReflectionVector(const FVector &InVector, const FVector &NormalVector, FVector &ReflectedVector);
+
 };

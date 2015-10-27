@@ -178,3 +178,8 @@ void UCVectorUtility::ConvertToMapSpace(const FVector &worldLocation, const FVec
 		inRange = false;
 	}
 }
+
+void UCVectorUtility::GetReflectionVector(const FVector &InVector, const FVector &NormalVector, FVector &ReflectedVector)
+{
+	ReflectedVector = 2 * FVector::DotProduct(InVector, NormalVector) * NormalVector - InVector;
+}
