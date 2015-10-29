@@ -26,19 +26,19 @@ ABlutenUndLevelnPawn::ABlutenUndLevelnPawn()
 	FireSound = FireAudio.Object;
 
 	//Camera anchor point, acts as the cameras target transform 
-	CameraAnchor = CreateDefaultSubobject<USceneComponent>(TEXT("CameraAnchor"));
+	/*CameraAnchor = CreateDefaultSubobject<USceneComponent>(TEXT("CameraAnchor"));
 	CameraAnchor->AttachTo(RootComponent);
 	CameraAnchor->RelativeRotation = FRotator(0, -70.f, 0);
-	CameraAnchor->RelativeLocation = FVector(0, 0, 900.f);
+	CameraAnchor->RelativeLocation = FVector(0, 0, 900.f);*/
 
 
 	//Camera
-	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
+	/*CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
 
 	CameraTransform = CameraAnchor->GetRelativeTransform();
 
 	CameraLocationSmoothing = 0.05f;
-	CameraRotationSmoothing = 0.05f;
+	CameraRotationSmoothing = 0.05f;*/
 
 	// Movement
 	MoveSpeed = 1000.0f;
@@ -101,12 +101,14 @@ void ABlutenUndLevelnPawn::Tick(float DeltaSeconds)
 	ShipMeshComponent->AddForce(RightValue * ThrusterForce * GetActorRightVector() * SidewaysMultiplier);
 	*/
 	//UpdateCameraLocation
+
+	/* TEMP???
 	CameraTransform = FTransform(
 		FMath::Lerp(CameraTransform.GetRotation().Rotator(), CameraAnchor->GetComponentRotation(), CameraRotationSmoothing),
 		FMath::Lerp(CameraTransform.GetLocation(), CameraAnchor->GetComponentLocation(), CameraLocationSmoothing),
 		FVector(1));
 
-	CameraComponent->SetWorldTransform(CameraTransform);
+	CameraComponent->SetWorldTransform(CameraTransform);*/
 }
 
 void ABlutenUndLevelnPawn::FireShot()
