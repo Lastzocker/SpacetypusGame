@@ -82,6 +82,18 @@ public:
 	UPROPERTY(Category = Viewport, EditAnywhere, BlueprintReadWrite)
 		float CameraRotationSmoothing;
 
+	UPROPERTY(Category = Internal, BlueprintReadWrite)
+		float ForwardThrust;
+
+	UPROPERTY(Category = Internal, BlueprintReadWrite)
+		float BackwardThrust;
+
+	UPROPERTY(Category = Internal, BlueprintReadWrite)
+		float LeftThrust;
+
+	UPROPERTY(Category = Internal, BlueprintReadWrite)
+		float RightThrust;
+
 	// Begin Actor Interface
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;

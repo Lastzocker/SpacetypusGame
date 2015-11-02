@@ -166,15 +166,31 @@ void ABlutenUndLevelnPawn::MoveForward(float Value)
 	if (Value > 0)
 	{
 		ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector());
+		ForwardThrust = Value;
+		BackwardThrust = 0;
 	}
 	else
 	{
 		ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector() * BackwardsMultiplier);
+		ForwardThrust = 0;
+		BackwardThrust = Value;
 	}
 }
 
 void ABlutenUndLevelnPawn::MoveRight(float Value)
 {
+	if (Value > 0)
+	{
+		RightThrust = Value;
+		LeftThrust = 0;
+	}
+	else
+	{
+		LeftThrust = Value;
+		RightThrust = 0;
+	}
+
+
 	ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorRightVector() * SidewaysMultiplier);
 }
 
