@@ -19,7 +19,6 @@ public class BlutenUndLeveln : ModuleRules
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 	    LoadLibNoise(Target);
-        LoadBoost();
 	}
 
     public bool LoadLibNoise(TargetInfo Target)
@@ -45,11 +44,6 @@ public class BlutenUndLeveln : ModuleRules
         Definitions.Add(string.Format("WITH_LIBNOISE_BINDING={0}", isLibrarySupported ? 1 : 0));
 
         return isLibrarySupported;
-    }
-
-    public void LoadBoost()
-    {
-        PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "Boost"));
     }
 
 }
