@@ -11,7 +11,9 @@
     <BuildProduct Path="$(ProjectDir)\Binaries\Win64\UE4Editor-BlutenUndLeveln.pdb" Type="SymbolFile" />
     <BuildProduct Path="$(ProjectDir)\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-BlutenUndLeveln.lib" Type="ImportLibrary" />
   </BuildProducts>
-  <RuntimeDependencies />
+  <RuntimeDependencies>
+    <RuntimeDependency Path="$(ProjectDir)\ThirdParty\Libnoise\Libraries\LibnoiseDLL.dll" />
+  </RuntimeDependencies>
   <AdditionalProperties />
   <bRequireDependenciesToExist>true</bRequireDependenciesToExist>
 </BuildReceipt>

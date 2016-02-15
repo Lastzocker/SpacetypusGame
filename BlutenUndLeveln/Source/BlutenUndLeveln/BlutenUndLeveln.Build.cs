@@ -19,6 +19,7 @@ public class BlutenUndLeveln : ModuleRules
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 	    LoadLibNoise(Target);
+	    LoadLibnoiseDLL();
 	}
 
     public bool LoadLibNoise(TargetInfo Target)
@@ -44,6 +45,14 @@ public class BlutenUndLeveln : ModuleRules
         Definitions.Add(string.Format("WITH_LIBNOISE_BINDING={0}", isLibrarySupported ? 1 : 0));
 
         return isLibrarySupported;
+    }
+
+    public bool LoadLibnoiseDLL()
+    {
+        string LibrariesPath = Path.Combine(ThirdPartyPath, "Libnoise", "Libraries");
+        RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(LibrariesPath, "LibnoiseDLL.dll")));
+        PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "LibnoiseDLL.lib"));
+        return true;
     }
 
 }
