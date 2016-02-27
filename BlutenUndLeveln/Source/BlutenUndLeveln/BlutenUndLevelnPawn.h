@@ -94,6 +94,12 @@ public:
 	UPROPERTY(Category = Internal, BlueprintReadWrite)
 		float RightThrust;
 
+	UPROPERTY(Category = Internal, BlueprintReadWrite)
+		float DeltaTime;
+
+	UPROPERTY(Category = Internal, BlueprintReadWrite)
+		float ReferenceDeltaTime;
+
 	// Begin Actor Interface
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;

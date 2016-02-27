@@ -58,6 +58,7 @@ ABlutenUndLevelnPawn::ABlutenUndLevelnPawn()
 
 	HullIntegrity = MaxHullIntegrity;
 
+	ReferenceDeltaTime = 0.016666667;
 }
 
 void ABlutenUndLevelnPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -65,11 +66,11 @@ void ABlutenUndLevelnPawn::SetupPlayerInputComponent(class UInputComponent* Inpu
 	check(InputComponent);
 
 	// set up gameplay key bindings
-	InputComponent->BindAxis(MoveForwardBinding);
+	/*InputComponent->BindAxis(MoveForwardBinding);
 	InputComponent->BindAxis(MoveRightBinding);
 	InputComponent->BindAxis(FireForwardBinding);
 	InputComponent->BindAxis(FireRightBinding);
-	InputComponent->BindAxis(TurnBinding);
+	InputComponent->BindAxis(TurnBinding);*/
 
 	//InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FireShot);
 	//InputComponent->BindAction("FindTarget", EInputEvent::IE_Pressed, this, &ABlutenUndLevelnPawn::FindTarget);
@@ -78,6 +79,8 @@ void ABlutenUndLevelnPawn::SetupPlayerInputComponent(class UInputComponent* Inpu
 void ABlutenUndLevelnPawn::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	DeltaTime = DeltaSeconds;
 
 	/*
 	// Find movement direction
@@ -165,13 +168,15 @@ void ABlutenUndLevelnPawn::MoveForward(float Value)
 {
 	if (Value > 0)
 	{
-		ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector());
+		//ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector());
+		ShipMeshComponent->AddImpulse(Value * ThrusterForce* GetActorForwardVector() * (DeltaTime/ReferenceDeltaTime));
 		ForwardThrust = Value;
 		BackwardThrust = 0;
 	}
 	else
 	{
-		ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector() * BackwardsMultiplier);
+		//ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorForwardVector() * BackwardsMultiplier);
+		ShipMeshComponent->AddImpulse(Value * ThrusterForce* GetActorForwardVector() * BackwardsMultiplier * (DeltaTime / ReferenceDeltaTime));
 		ForwardThrust = 0;
 		BackwardThrust = Value;
 	}
@@ -191,10 +196,10 @@ void ABlutenUndLevelnPawn::MoveRight(float Value)
 	}
 
 
-	ShipMeshComponent->AddForce(Value * ThrusterForce * GetActorRightVector() * SidewaysMultiplier);
+	ShipMeshComponent->AddImpulse(Value * ThrusterForce * GetActorRightVector() * SidewaysMultiplier * (DeltaTime / ReferenceDeltaTime));
 }
 
 void ABlutenUndLevelnPawn::Turn(float Value)
 {
-	ShipMeshComponent->AddAngularImpulse(FVector(0, 0, Value * TurnSpeed));
+	ShipMeshComponent->AddAngularImpulse(FVector(0, 0, Value * TurnSpeed * (DeltaTime / ReferenceDeltaTime)));
 }
